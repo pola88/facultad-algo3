@@ -5,6 +5,7 @@
 #include "list.h"
 
 #include "string.h"
+
 /**@brief Funcion para iniciar el Redis
    @param redis: Puntero al redis que deceo inicializar
    **/
@@ -32,16 +33,14 @@ void redis_createItem(Redis* redis, char* key, char* value, const size_t size) {
   item_init(&newItem, key, value, size);
   redis_addItem(redis, &newItem);
 }
-
 int redis_createList(Redis* redis, char* key, char* value, const size_t size) {
   Item newItem;
 
   int count = item_initList(&newItem, key, value, size);
   redis_addItem(redis, &newItem);
-
+  printf("contador de redis_creatlist: %d\n", count);
   return count;
 }
-
 /**@brief Funcion que inicia el valor de un Item.
    @param redis: Puntero al redis donde se encuentra el item.
    @param key: Puntero a la clave que accede al Item.
@@ -56,7 +55,6 @@ void redis_set(Redis* redis, char* key, char* value, const size_t size) {
     item_setValue(currentItem, value, size);
   }
 }
-
 /**@brief Funcion que mediante una clave retorna.
    @return Item: El valor correspondiente a la clave.
    @return 0 si el redis es null o si la clave no existe
@@ -97,7 +95,6 @@ int redis_exists(Redis* redis, char* key) {
     return 0;
   }
 }
-
 /**@brief Funcion que imprime el largo de un valor encontrado por medio de una clave dada
    @param redis: Puntero al redis donde se encuentra el valor.
    @param key: Puntero a la clave que accede al valor.
@@ -112,7 +109,6 @@ void redis_strlen(Redis* redis, char* key) {
 
   printf("%i\n", length);
 }
-
 /**@brief Funcion que concatena valor a un valor ya existente, si no existe lo crea.
    @param redis: Puntero al redis donde se encuentra el Item con el valor.
    @param key: Puntero a la calve que accede al valor.
@@ -157,12 +153,10 @@ void redis_free(Redis* redis){
     item_free((Item*) tmp);
     tmp = tmp + sizeof(Item);
   }
-
   free(redis->values);
   redis->values = 0;
   redis->total = 0;
 }
-
 /**@brief Funcion que muestra el contenido de los redis en consola.
     @param redis: Puntero a redis con el contenido que deseo ver en consola.
 **/
@@ -178,11 +172,9 @@ void redis_show(Redis* redis) {
 
   printf("\n");
 }
-
 //Funciones para la lista.
 //Lo programo un tipo mas.
 //TODO: lo cambie, la key lo recibo como char*, y siempre q hago el get, veo si existe, sino siempre devuelvo 0
-
 /**@brief Funcion que dado una calve, crea un nuevo nodo y empujar el resto para atras,
     dejando a ese nodo primero y luego le inserta a ese nodo nuevo el valor de la clave.
     @param redis: Puntero a redis donde esta el valor a empujar.
@@ -232,8 +224,7 @@ int redis_lLeng(Redis* redis, char* key){
 LinkedList* redis_lGet(Redis* redis, char* key){
     Item* item = redis_get(redis,key);
     if(item) {
-      // return Ileng(item);
-      return 0;
+      return item_leng(item);
     } else {
       return 0;
     }

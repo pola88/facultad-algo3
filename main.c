@@ -44,6 +44,7 @@ int main(int argc, char** argv) {
     printf("Agrego lista\n");
     int count = redis_lPush(&redis, "myList", buffer, sizeof(buffer));
     count = redis_lPush(&redis, "myList", newValue, sizeof(newValue));
+    printf("\n");
     printf("Tamaño de la lista %i\n", count);
 
     printf("Keys\n");
@@ -51,4 +52,6 @@ int main(int argc, char** argv) {
 
     printf("Liberar redis\n");
     redis_free(&redis);
+    printf("\n");
+    printf("TODO CORRECTO");
 }

@@ -25,7 +25,20 @@ void node_setValue(Node* node,const char* value,const size_t size) {
    @param node:Puntero al node donde queiro setiar.
    @param in: Puntero al node que quiero remplazar.**/
 void node_setIn(Node* node, Node* in){
-    node->in = in;
+    printf("Estoy en node_setIn\n");
+    if(in){
+        printf("Se ejecuto if\n");
+        node->in = in;
+    }
+    else{
+        /**
+        HAY QUE BUSCAR UNA FORMA DE SETEAR EL PUNTERO IN A NULO SIN USAR NULL O 0(CERO)
+        PORQUE UN PUNTERO VOID NO LO ADMITE.
+        */
+        printf("Se ejecuto else\n");
+        //node->in = NULL;
+    }
+    printf("Sali de node_setIn\n");
 }
 /**@brief Funcion que cambia el puntero al node siguiente por uno pasa por parametro
    @param Node: Puntero al node que quiero setiar.

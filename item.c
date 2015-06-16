@@ -49,25 +49,25 @@ int item_appendValue(Item* item, const char* value, const size_t size) {
 int item_getSize(Item* item) {
   return data_getSize(item->value);
 }
-
 /**@brief Funcion que libera la memoria alocada por el item que se le pasapor parametro.
    @param item: Puntero al item a liberar.**/
 void item_free(Item* item){
-  if (item->linkList){
-    list_free(item->linkList);
+
+  if(item->linkList){
+    list_free(item->linkList);//revisar.
     free(item->linkList);
     item->linkList = 0;
-  } else{
+  }
+
+ else{
     data_free(item->value);
     free(item->value);
     item->value = 0;
   }
-
   printf("%s\n", item->key);
   free(item->key);
   item->key = 0;
 }
-
 /**@brief Funcion que inicia el item con una lista.
    @param item: Puntero al item que deceo iniciar.
    @param key: Puntero a la calve con la que quiero iniciar el item.
@@ -81,7 +81,6 @@ int item_initList(Item* item, char* key, char* value, const size_t size){
 
   return list_init(item->linkList, value, size);
 }
-
 /**@brief Funcion que dada un Item y un dato, empuja el dato al frente de la lista desplasando
    el resto de los datos un posicion  para atras.
    @param Item: Puntero al item al que quiero hacer push.

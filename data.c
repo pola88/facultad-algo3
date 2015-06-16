@@ -70,9 +70,9 @@ void data_setValue(Data* data, const char* value, const size_t size) {
    @param dst: Puntero a la data que recibe el valor copiado
    @param src: Puntero a la data de donde secopia el valor.*/
 void data_copy(Data* dst, Data* src) {
+  printf("estoy en data copy \n");
   dst->size = src->size;
   data_reallocIfNecesary(dst);//chequeo si es necesario pedir mas memoria
-
   memcpy(dst->value, src->value, dst->capacity - 1);
 }
 /**@brief Funcion que concatena datas.
