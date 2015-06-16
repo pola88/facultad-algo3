@@ -14,7 +14,8 @@ void redis_init(Redis* redis) {
 }
 
 void redis_addItem(Redis* redis, Item* item) {
-  int move = sizeof(Item)*(redis->total- 1);//cuanto tengo q avanzar, para agregar el nuevo item
+  int move = redis->total*sizeof(Item);//cuanto tengo q avanzar, para agregar el nuevo item
+  redis->total++;
   redis->values = realloc(redis->values, sizeof(Item)*redis->total);//pido mas memoria para el nuevo item
   memcpy(redis->values+move, item, sizeof(Item));//agrego el item al array
 }
@@ -26,7 +27,6 @@ void redis_addItem(Redis* redis, Item* item) {
    @param size: Tamaño del nuevo item a crear
    **/
 void redis_createItem(Redis* redis, char* key, char* value, const size_t size) {
-  redis->total++;
   Item newItem;
 
   item_init(&newItem, key, value, size);
@@ -34,7 +34,6 @@ void redis_createItem(Redis* redis, char* key, char* value, const size_t size) {
 }
 
 int redis_createList(Redis* redis, char* key, char* value, const size_t size) {
-  redis->total++;
   Item newItem;
 
   int count = item_initList(&newItem, key, value, size);
@@ -68,19 +67,18 @@ Item* redis_get(Redis* redis, char* key) {
   if(redis->total == 0) {
     return 0;
   } else {
-    Item* tmp = redis->values;
-    Item* tmpSrc = redis->values;
+    void* tmp = redis->values;
+    void* tmpSrc = redis->values;
 
     int totalSize = redis->total*sizeof(Item);
-
-    while((tmp - tmpSrc) < totalSize && strcmp(tmp->key,key)) {
+    while((tmp - tmpSrc) < totalSize && strcmp(((Item*)tmp)->key,key)) {
       tmp = tmp + sizeof(Item);
     }
 
     if(totalSize == (tmp - tmpSrc)) { //si el mismo valor, no encontro la key
       return 0;
     } else {
-      return tmp;
+      return (Item*)tmp;
     }
   }
 }
@@ -132,34 +130,49 @@ int redis_append(Redis* redis, char* key, char* value, const size_t size) {
   }
 }
 
+void redis_showKeys(Redis* redis) {
+  void* tmp = redis->values;
+  void* tmpSrc = redis->values;
+
+  //imprimo hasta el tamaño de la palabra
+  while((tmp - tmpSrc) < redis->total*sizeof(Item)) {
+    Item* aux = tmp;
+    printf("%s\n", aux->key);
+    tmp = tmp + sizeof(Item);
+  }
+
+  printf("\n");
+}
+
 //funciones agregadas por Ale COMIENZO
 /**@brief Funcion para liberar la memoria alocada por todos los recursos que utiliza el objeto
           redis que se le pasa por parametro.
     @param redis: Puntero a redis que quiero liberar de la memoria.
 **/
 void redis_free(Redis* redis){
-  Item* tmp = redis->values;
-  Item* tmpSrc = redis->values;
+  void* tmp = redis->values;
+  void* tmpSrc = redis->values;
   //recorro redis->values liberando item a item
   while((tmp - tmpSrc) < redis->total*sizeof(Item)) {
-    item_free(tmp);
+    item_free((Item*) tmp);
     tmp = tmp + sizeof(Item);
   }
 
   free(redis->values);
   redis->values = 0;
+  redis->total = 0;
 }
 
 /**@brief Funcion que muestra el contenido de los redis en consola.
     @param redis: Puntero a redis con el contenido que deseo ver en consola.
 **/
 void redis_show(Redis* redis) {
-  Item* tmp = redis->values;
-  Item* tmpSrc = redis->values;
+  void* tmp = redis->values;
+  void* tmpSrc = redis->values;
 
   //imprimo hasta el tamaño de la palabra
   while((tmp - tmpSrc) < redis->total*sizeof(Item)) {
-    item_showValue(tmp);
+    item_showValue((Item*)tmp);
     tmp = tmp + sizeof(Item);
   }
 
@@ -189,15 +202,14 @@ int redis_lPush(Redis* redis, char* key, char* value, const size_t size){
    @param redis: Puntero al redis donde se encuentra la lista.
    @param key: Puntero a que accede al itemque contiene la lista.
    @return data: Puntero al ddato que se quito de la lista.*/
-Data* redis_lPop(Redis* redis, char* key){
+void redis_lPop(Redis* redis, char* key, Data* data){
     Item* item = redis_get(redis,key);
 
     if(item) {
-      return item_pop(item);
+      item_pop(item, data);
     } else {
-      return 0;
+      data = 0;
     }
-
 }
 /**@brief Fucnion que retorna el largo e la lista.
    @param redis: Punteor al redis donde se encuentra la lista que quiero medir.

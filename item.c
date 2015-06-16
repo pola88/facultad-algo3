@@ -63,6 +63,7 @@ void item_free(Item* item){
     item->value = 0;
   }
 
+  printf("%s\n", item->key);
   free(item->key);
   item->key = 0;
 }
@@ -92,8 +93,8 @@ int item_push(Item* item, char* value, size_t size){
 /**@brief Funcion que dado un Item retorna el primer elemento de su lista.
    @param item: Puntero al item donde se encuentra la lisa a hacer pop.
    @return Data: Puntero al elemento que se quito.*/
-Data* item_pop(Item* item){
-    return list_pop(item->linkList);
+void item_pop(Item* item, Data* data){
+  list_pop(item->linkList, data);
 }
 /**@brief Funcion que dado un item retorna le largo de la lista que contiene.
    @param item: Puntero al itme donde se encuentra la lista a medir.

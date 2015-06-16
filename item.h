@@ -36,14 +36,12 @@ int item_getSize(Item* item);
    @param item: Puntero al item a liberar.**/
 void item_free(Item* item);
 
-//Lo programo un tipo mas
 /**@brief Funcion que inicia el item.
    @param item: Puntero al item que deceo iniciar.
    @param key: Puntero a la calve con la que quiero iniciar el item.
    @param vale: Puntero al valor con el que iniciar el item.
    @param linkList: Puntero a la lista donde se almacenan los valoras.
    @param size: Tama�o del item.**/
-// void initItem(Item* item, char* key, char* value,LinkedList* linkList, const size_t size);
 int item_initList(Item* item, char* key, char* value, const size_t size);
 
 /**@brief Funcion que dada un Item y un dato, empuja el dato al frente de la lista desplasando
@@ -55,7 +53,7 @@ int item_push(Item* item, char* value, size_t size);
 /**@brief Funcion que dado un Item retorna el primer elemento de su lista.
    @param item: Puntero al item donde se encuentra la lisa a hacer pop.
    @return Data: Puntero al elemento que se quito.*/
-Data* item_pop(Item* item);
+void item_pop(Item* item, Data* data);
 /**@brief Funcion que dado un item retorna le largo de la lista que contiene.
    @param item: Puntero al itme donde se encuentra la lista a medir.
    @return Int: Largo de la lista que se midio.*/

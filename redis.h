@@ -6,7 +6,7 @@
 
 typedef struct _Redis {
     int total;//total de elementos
-    Item* values;//Elementos en redis
+    void* values;//Elementos en redis
 } Redis;
 /**@brief Funcion para iniciar el Redis
    @param redis: Puntero al redis que deceo inicializar
@@ -82,7 +82,7 @@ int redis_lPush(Redis* redis, char* key, char* value, size_t size);
    @param redis: Puntero al redis donde se encuentra la lista.
    @param key: Puntero a que accede al itemque contiene la lista.
    @return data: Puntero al ddato que se quito de la lista.*/
-Data* redis_lPop(Redis* redis, char* key);
+void redis_lPop(Redis* redis, char* key, Data* data);
 /**@brief Fucnion que retorna el largo e la lista.
    @param redis: Punteor al redis donde se encuentra la lista que quiero medir.
    @param key: Clave que accede a la lista que deceo medir.
@@ -96,4 +96,6 @@ LinkedList* redis_lGet(Redis* redis, char* key);
 //lo programo un tipo mas
 
 int redis_createList(Redis* redis, char* key, char* value, const size_t size);
+
+void redis_showKeys(Redis* redis);
 #endif

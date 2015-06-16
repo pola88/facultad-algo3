@@ -1,4 +1,6 @@
 #include <stdlib.h>
+#include <stdio.h>
+
 #include "list.h"
 #include "node.h"
 #include "data.h"
@@ -9,7 +11,7 @@
 /**@brief Funcion que inicia la LinkedLista con un nodo con dato.
    @param LinkedList: Puntero a la lista que quiero iniciar.
    @param data: Puntero a la data que quiero iniciar.*/
-int list_init(LinkedList* linkList, char* value, size_t size){
+int list_init(LinkedList* linkList,const char* value,const size_t size){
   linkList->front = (Node*)malloc(sizeof(Node));
 
   node_init(linkList->front, 0, 0);
@@ -39,10 +41,15 @@ void list_free(LinkedList* linklist){
     int size = linklist->nroCollection;
     int i;
     //TODO: change this
-    for(i=0;i<size;i++){
-        data_free((Data*) list_pop(linklist));
+    for(i=0; i < (size-1); i++){
+      Data* aux = NULL;
+      list_pop(linklist, aux);
+      data_print(aux);
+      data_free(aux);
     }
+
     free(linklist->front);
+    linklist->front = 0;
 }
 
 /**@brief Funcion que dada una lista y un dato, crea un nuevo node con el dato
@@ -51,18 +58,17 @@ void list_free(LinkedList* linklist){
    @param linkList: Puntero a la lista a la que quiero hacer push.
    @param data: Puntero al dato que quiero poner enfrente.
    @return Int: El largo total de la lista.*/
-int list_push(LinkedList* linkList, char* value, size_t size){
-    Node* newNode = (Node*) malloc(sizeof(Node));
+int list_push(LinkedList* linkList, const char* value, const size_t size){
+    Node* newNode = (Node*)malloc(sizeof(Node));
+
     node_init(newNode,0, linkList->front);
     node_setValue(newNode, value, size);
 
     //tomo el primer nodo de la lista.
     Node* front = linkList->front;
     //le asigno el nuevo nodo que creo enfrente.
-    node_setIn(front,newNode);
+    node_setOut(front,newNode);
 
-    //le asigno el de atras al nuevo nodo
-    node_setOut(newNode, front);
     //al frente de la lista le asigno el nuevo nodo
     linkList->front = newNode;
     //aumento la cantidad de nodos en la lista y lo retorno.
@@ -73,17 +79,24 @@ int list_push(LinkedList* linkList, char* value, size_t size){
 /**@brief Funcion que dada una lista le quita le perimer dato y lo retorna.
    @param linkList: Puntero a lalista que quiero hacer pop.
    @return Data: Puntero al elemento que se quito.*/
-Data* list_pop(LinkedList* linkList){
+void list_pop(LinkedList* linkList, Data* data){
     Node* oldFront = linkList->front;
-    Node* newFront = node_getNext(linkList->front);
-    linkList->front = newFront;
-    node_setIn(newFront,NULL);
-    linkList->nroCollection--;
-    //al devolver Data, descarto el Nodo.
-    Data* aux = (Data*) malloc(sizeof(Data));
-    aux = node_getValue(oldFront);
+
+    //Si tiene un solo elemento, no hay q setear el nuevo front.
+    if(linkList->nroCollection > 1) {
+      Node* newFront = node_getNext(oldFront);
+      linkList->front = newFront;
+      node_setIn(newFront, 0);
+    } else {
+      //No se si hay q liberarla
+      linkList->front = 0;
+    }
+
+    Data* aux = node_getValue(oldFront);
+    data_copy(data, aux);
     node_free(oldFront);
-    return aux;
+
+    linkList->nroCollection--;
 }
 /**@brief Funcion que dada una lista retorna el largo de la misma.
    @param linkList: Puntero a la lista que deceo medir.

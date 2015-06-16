@@ -17,7 +17,7 @@ void node_init(Node* node,Node* out,Node* in){
 }
 
 //TODO: se encarga de setear el valor al node
-void node_setValue(Node* node, char* value, size_t size) {
+void node_setValue(Node* node,const char* value,const size_t size) {
   data_init(node->value, value, size);
 }
 
@@ -45,13 +45,13 @@ Data* node_getValue(Node* node){
    @param node: Puntero a node actual donde estoy.
    @return node: Puntero al nodo siguiente, en caso de no haber 0.**/
 Node* node_getNext(Node* node){
-    return node->out;
+    return (Node*)node->out;
 }
 /**@brief Funcion que retorna un puntero al nodo anterior.
    @param node: Puntero al node donde estoy parado.
    @return node: Puntero al nodo anterior.**/
 Node* node_getBack(Node* node){
-    return node->in;
+    return (Node*)node->in;
 }
 
 //TODO: habria q sacar los punteros del out y del in

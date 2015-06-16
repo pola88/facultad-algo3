@@ -39,5 +39,5 @@ Node* node_getBack(Node* node);
 void node_free(Node* node);
 
 
-void node_setValue(Node* node, char* value, size_t size);
+void node_setValue(Node* node,const char* value,const size_t size);
 #endif // __NODE_H_
