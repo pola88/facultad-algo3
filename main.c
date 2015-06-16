@@ -1,11 +1,10 @@
 #include <stdio.h>
 
-#include "redis.c"
 #include "redis.h"
 
 int main(int argc, char** argv) {
     Redis redis;
-    initRedis(&redis);
+    redis_init(&redis);
 
     char buffer[] = { 1, 15, 129, 0x0, 205, 'a', 'z', 13, 10, 0x12};
     char newValue[] = { 1, 15};
@@ -13,31 +12,37 @@ int main(int argc, char** argv) {
 
     printf("Redis:\n");
     //
-    set(&redis, "myKey", buffer, sizeof(buffer));
+    redis_set(&redis, "myKey", buffer, sizeof(buffer));
     //
-    set(&redis, "myKey2", newValue, sizeof(buffer));
+    redis_set(&redis, "myKey2", newValue, sizeof(newValue));
     //
-    set(&redis, "myKey", secondValue, sizeof(secondValue));
+    redis_set(&redis, "myKey", secondValue, sizeof(secondValue));
 
-    show(&redis);
+    redis_show(&redis);
 
     printf("Exists\n");
-    printf("%i\n", exists(&redis, "myKey"));
-    printf("%i\n", exists(&redis, "fake"));
-    printf("%i\n", exists(&redis, "myKey2"));
+    printf("%i\n", redis_exists(&redis, "myKey"));
+    printf("%i\n", redis_exists(&redis, "fake"));
+    printf("%i\n", redis_exists(&redis, "myKey2"));
 
     printf("Sizes\n");
-    redisStrlen(&redis, "myKey");
-    redisStrlen(&redis, "fake");
-    redisStrlen(&redis, "myKey2");
+    redis_strlen(&redis, "myKey");
+    redis_strlen(&redis, "fake");
+    redis_strlen(&redis, "myKey2");
 
     printf("Append\n");
-    printf("Nuevo Size: %d\n", append(&redis, "myKey", secondValue, sizeof(secondValue)));
-    printf("Nuevo Size: %d\n", append(&redis, "myKey2", secondValue, sizeof(secondValue)));
+    printf("Nuevo Size: %d\n", redis_append(&redis, "myKey", secondValue, sizeof(secondValue)));
+    printf("Nuevo Size: %d\n", redis_append(&redis, "myKey2", secondValue, sizeof(secondValue)));
 
     printf("Get: \n");
-    Item* i = get(&redis, "myKey");
+    Item* i = redis_get(&redis, "myKey");
     printf("%s\n", i->key);
 
-    freeRedis(&redis);
+
+    int count = redis_lPush(&redis, "myList", buffer, sizeof(buffer));
+
+    count = redis_lPush(&redis, "myList", newValue, sizeof(newValue));
+    printf("%i\n", count);
+
+    redis_free(&redis);
 }
