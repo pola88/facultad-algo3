@@ -42,12 +42,13 @@ void list_free(LinkedList* linklist){
     int size = linklist->nroCollection;
     int i;
     //TODO: change this
-    for(i=0; i < (size-1); i++){
+    for(i=0; i < size; i++){
       /**No se pueden pasar cosas null a estos metodos, el cumpilador te putea.*/
-      Data* aux= NULL;
-      list_pop(linklist, aux);
-      //data_print(aux);
-      //data_free(aux);
+      Data aux;
+      data_init(&aux, "",0);
+      list_pop(linklist, &aux);
+      // data_print(&aux);
+      data_free(&aux);
     }
 
     free(linklist->front);
@@ -61,8 +62,9 @@ void list_free(LinkedList* linklist){
    @param data: Puntero al dato que quiero poner enfrente.
    @return Int: El largo total de la lista.*/
 int list_push(LinkedList* linkList, const char* value, const size_t size){
-    Node* newNode = malloc(sizeof(Node));
+    Node* newNode = (Node*)malloc(sizeof(Node));
 
+    //TODO: aca estaba el problema, estabamos asignando al reves los punteros
     node_init(newNode,0, linkList->front);
     node_setValue(newNode, value, size);
 
@@ -93,15 +95,16 @@ void list_pop(LinkedList* linkList, Data* data){
 
     } else {
       printf("Se ejecuto primer else\n");
-      /**Lo mas seguro que esto tmb rompa!!!*/
       linkList->front = 0;
     }
+
     Data* aux = node_getValue(oldFront);
-    //NO SE PUEDE PASAR COSAS NULAS AL METODO DATA_COPY ESTO ROMPE.
-    if(!data==NULL){
-        printf("Se ejecuo segundo if\n");
-        data_copy(data, aux);
-    }
+
+    // //TODO:NO SE PUEDE PASAR COSAS NULAS AL METODO DATA_COPY ESTO ROMPE. la pregunta seria, porque viene NULL?
+    // if(!data){
+    printf("Se ejecuo segundo if\n");
+    data_copy(data, aux);
+    // }
     node_free(oldFront);
     linkList->nroCollection--;
     printf("Sali de list pop \n");

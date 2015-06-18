@@ -5,12 +5,14 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include <stdio.h> //Borrar al sacar los printf
+
 /**@brief Funcion que inicia el nodo
    @param node: Puntero al node que quiero inicializar.
    @param out: Puntero al nodo anterior
    @param in: Puntero al nodod que sique
 **/
-void node_init(Node* node,Node* out,Node* in){
+void node_init(Node* node,Node* in, Node* out){
     node_setIn(node, in);
     node_setOut(node, out);
     node->value = (Data*) malloc(sizeof(Data));
@@ -26,18 +28,18 @@ void node_setValue(Node* node,const char* value,const size_t size) {
    @param in: Puntero al node que quiero remplazar.**/
 void node_setIn(Node* node, Node* in){
     printf("Estoy en node_setIn\n");
-    if(in){
+    // if(in){
         printf("Se ejecuto if\n");
         node->in = in;
-    }
-    else{
+    // }
+    // else{
         /**
         HAY QUE BUSCAR UNA FORMA DE SETEAR EL PUNTERO IN A NULO SIN USAR NULL O 0(CERO)
         PORQUE UN PUNTERO VOID NO LO ADMITE.
         */
-        printf("Se ejecuto else\n");
+        // printf("Se ejecuto else\n");
         //node->in = NULL;
-    }
+    // }
     printf("Sali de node_setIn\n");
 }
 /**@brief Funcion que cambia el puntero al node siguiente por uno pasa por parametro

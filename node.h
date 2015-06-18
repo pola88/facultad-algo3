@@ -13,7 +13,7 @@ typedef struct _node{
    @param out: Puntero al nodo anterior
    @param in: Puntero al nodod que sique
    @param value: Punetro al data que almacena el nodo**/
-void node_init(Node* node, Node* out, Node* in);
+void node_init(Node* node, Node* in, Node* out);
 /**@brief Funcion que cambia el puntero a node por lo que se le pase por parametro
    @param node:Puntero al node donde queiro setiar.
    @param in: Puntero al node que quiero remplazar.**/

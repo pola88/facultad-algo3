@@ -172,9 +172,8 @@ void redis_show(Redis* redis) {
 
   printf("\n");
 }
+
 //Funciones para la lista.
-//Lo programo un tipo mas.
-//TODO: lo cambie, la key lo recibo como char*, y siempre q hago el get, veo si existe, sino siempre devuelvo 0
 /**@brief Funcion que dado una calve, crea un nuevo nodo y empujar el resto para atras,
     dejando a ese nodo primero y luego le inserta a ese nodo nuevo el valor de la clave.
     @param redis: Puntero a redis donde esta el valor a empujar.
@@ -224,7 +223,8 @@ int redis_lLeng(Redis* redis, char* key){
 LinkedList* redis_lGet(Redis* redis, char* key){
     Item* item = redis_get(redis,key);
     if(item) {
-      return item_leng(item);
+      // return item_leng(item); esto devuelve el largo de la lista, deberia devolver la lista!
+      return 0;
     } else {
       return 0;
     }
