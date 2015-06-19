@@ -72,6 +72,8 @@ Node* node_getBack(Node* node){
 //TODO: habria q sacar los punteros del out y del in
 void node_free(Node* node) {
   data_free(node->value);
+  node->in = NULL;
+  node->out = NULL;
   free(node->value);
   node->value = 0;
 }
