@@ -55,13 +55,13 @@ void redis_strlen(Redis* redis, char* key);
    @return El largo de mi valor.
     **/
 int redis_append(Redis* redis, char* key, char* value, const size_t size);
-//funciones agregadas por Ale COMIENZO
+
 /**@brief Funcion para liberar la memoria alocada por todos los recursos que utiliza el objeto
           redis que se le pasa por parametro.
     @param redis: Puntero a redis que quiero liberar de la memoria.
 **/
 void redis_free(Redis* redis);
-//funciones agregadas por Ale FINAL
+
 /**@brief Funcion que muestra el contenido de los redis en consola.
     @param redis: Puntero a redis con el contenido que deseo ver en consola.
 **/

@@ -38,7 +38,7 @@ void list_removeNode(Node* node){
 /**@brief Funcion que libera todo los recursos alocados en memoria de una lista.
    @param linklist: Punteor a la lista que quiero liberar.*/
 void list_free(LinkedList* linklist){
-    printf("estoy en list_free \n");
+    printf("$$$ LIST----FREE $$$ ENTRO en LIST_free \n");
     int size = linklist->nroCollection;
     int i;
     //TODO: change this
@@ -46,14 +46,18 @@ void list_free(LinkedList* linklist){
       /**No se pueden pasar cosas null a estos metodos, el cumpilador te putea.*/
       Data aux;
       data_init(&aux, "",0);
+      printf("$$$ LIST----FREE $$$ LLAMO a POP para sacarlo de la lista, ves n: %i\n",i);
       list_pop(linklist, &aux);
       // data_print(&aux);
+      printf("$$$ LIST----FREE $$$ borro dato aux traido por pop \n");
       data_free(&aux);
     }
 
     free(linklist->front);
     linklist->front = 0;
-    printf("sali de lis_free\n");
+    free(linklist->back);
+    linklist->back = 0;
+    printf("$$$ LIST----FREE $$$ sali de lis_free\n");
 }
 /**@brief Funcion que dada una lista y un dato, crea un nuevo node con el dato
    empuja el resto una posicion para atras y colaca le nuevo node en la priemra
@@ -84,17 +88,17 @@ int list_push(LinkedList* linkList, const char* value, const size_t size){
    @param linkList: Puntero a lalista que quiero hacer pop.
    @return Data: Puntero al elemento que se quito.*/
 void list_pop(LinkedList* linkList, Data* data){
-    printf("estoy en list pop \n");
+    printf("$$$ LIST-POP $$$ estoy en list pop \n");
     Node* oldFront = linkList->front;
     //Si tiene un solo elemento, no hay q setear el nuevo front.
     if(linkList->nroCollection > 1) {
-      printf("Se ejecuto primer if\n");
+      printf("$$$ LIST-POP $$$ Se ejecuto primer if\n");
       Node* newFront = node_getNext(oldFront);
       linkList->front = newFront;
       node_setIn(newFront,0);
 
     } else {
-      printf("Se ejecuto primer else\n");
+      printf("$$$ LIST-POP $$$ Se ejecuto primer else\n");
       linkList->front = 0;
     }
 
@@ -102,12 +106,12 @@ void list_pop(LinkedList* linkList, Data* data){
 
     // //TODO:NO SE PUEDE PASAR COSAS NULAS AL METODO DATA_COPY ESTO ROMPE. la pregunta seria, porque viene NULL?
     // if(!data){
-    printf("Se ejecuo segundo if\n");
+    //printf("$$$ LIST-POP $$$ Se ejecuo segundo if\n");
     data_copy(data, aux);
     // }
     node_free(oldFront);
     linkList->nroCollection--;
-    printf("Sali de list pop \n");
+    printf("$$$ LIST-POP $$$ Sali de list pop \n");
 }
 /**@brief Funcion que dada una lista retorna el largo de la misma.
    @param linkList: Puntero a la lista que deceo medir.

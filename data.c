@@ -44,6 +44,7 @@ void data_print(Data* data) {
 /**@brief Funcion que libera los recusos a locados en memoria por la data.
    @param data: Puntero a la data que quiero liberar.*/
 void data_free(Data* data) {
+    printf("FREE DATA!!!\n");
   free(data->value);
   data->value = 0;
 }

@@ -40,6 +40,7 @@ int redis_createList(Redis* redis, char* key, char* value, const size_t size) {
   redis_addItem(redis, &newItem);
   printf("contador de redis_creatlist: %d\n", count);
   return count;
+
 }
 /**@brief Funcion que inicia el valor de un Item.
    @param redis: Puntero al redis donde se encuentra el item.
@@ -146,16 +147,23 @@ void redis_showKeys(Redis* redis) {
     @param redis: Puntero a redis que quiero liberar de la memoria.
 **/
 void redis_free(Redis* redis){
+  printf(("--REDIS -- ENTRO en free REDIS \n"));
   void* tmp = redis->values;
   void* tmpSrc = redis->values;
   //recorro redis->values liberando item a item
+  int num = 0;
   while((tmp - tmpSrc) < redis->total*sizeof(Item)) {
+    printf("--REDIS -- corre while vez: %i\n", num);
     item_free((Item*) tmp);
     tmp = tmp + sizeof(Item);
+    num++;
   }
   free(redis->values);
   redis->values = 0;
   redis->total = 0;
+  tmp = NULL;
+  tmpSrc = NULL;
+  printf(("--REDIS -- SALGO en free REDIS \n"));
 }
 /**@brief Funcion que muestra el contenido de los redis en consola.
     @param redis: Puntero a redis con el contenido que deseo ver en consola.

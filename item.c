@@ -52,21 +52,24 @@ int item_getSize(Item* item) {
 /**@brief Funcion que libera la memoria alocada por el item que se le pasapor parametro.
    @param item: Puntero al item a liberar.**/
 void item_free(Item* item){
-
+  printf("### ITEM ### ENTRO en free ITEM \n");
   if(item->linkList){
+    printf("### ITEM ### Es un item lista\n");
     list_free(item->linkList);//revisar.
     free(item->linkList);
     item->linkList = 0;
   }
 
  else{
+    printf("### ITEM ### Es un item dato\n");
     data_free(item->value);
     free(item->value);
     item->value = 0;
   }
-  printf("%s\n", item->key);
+  printf("### ITEM ### %s\n", item->key);
   free(item->key);
   item->key = 0;
+  printf("### ITEM ### salgo del free ITEM\n");
 }
 /**@brief Funcion que inicia el item con una lista.
    @param item: Puntero al item que deceo iniciar.

@@ -27,9 +27,9 @@ void node_setValue(Node* node,const char* value,const size_t size) {
    @param node:Puntero al node donde queiro setiar.
    @param in: Puntero al node que quiero remplazar.**/
 void node_setIn(Node* node, Node* in){
-    printf("Estoy en node_setIn\n");
+    printf("===== NODE ===== Estoy en node_setIn\n");
     // if(in){
-        printf("Se ejecuto if\n");
+        printf("===== NODE ===== Se ejecuto if\n");
         node->in = in;
     // }
     // else{
@@ -40,7 +40,7 @@ void node_setIn(Node* node, Node* in){
         // printf("Se ejecuto else\n");
         //node->in = NULL;
     // }
-    printf("Sali de node_setIn\n");
+    printf("===== NODE ===== Sali de node_setIn\n");
 }
 /**@brief Funcion que cambia el puntero al node siguiente por uno pasa por parametro
    @param Node: Puntero al node que quiero setiar.
@@ -69,11 +69,13 @@ Node* node_getBack(Node* node){
     return (Node*)node->in;
 }
 
-//TODO: habria q sacar los punteros del out y del in
+//TODO: habria q sacar los punteros del out y del in // lo hago con NULL, por ahora, lo dejo asi, no se quejo el compilador.
 void node_free(Node* node) {
+  printf("===== NODE ===== en free NODE\n");
   data_free(node->value);
   node->in = NULL;
   node->out = NULL;
   free(node->value);
   node->value = 0;
+  printf("===== NODE ===== SALGO de free NODE\n");
 }
