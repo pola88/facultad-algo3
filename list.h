@@ -5,7 +5,6 @@
 #include "node.h"
 #include "data.h"
 
-// TODO: no se si con el back, querias poner
 typedef struct _list{
     Node* front;
     Node* back;

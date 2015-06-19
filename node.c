@@ -1,11 +1,8 @@
 #include "node.h"
 #include "data.h"
 
-
 #include <stdlib.h>
 #include <string.h>
-
-#include <stdio.h> //Borrar al sacar los printf
 
 /**@brief Funcion que inicia el nodo
    @param node: Puntero al node que quiero inicializar.
@@ -18,7 +15,11 @@ void node_init(Node* node,Node* in, Node* out){
     node->value = (Data*) malloc(sizeof(Data));
 }
 
-//TODO: se encarga de setear el valor al node
+/**@brief Funcion que permite setear un valor a un nodo.
+   @param node: Puntero al nodo al cual yo quiero darle le valor.
+   @param value: Puntero al valor que quiero darle al nodo.
+   @param size: tamaño del valor
+*/
 void node_setValue(Node* node,const char* value,const size_t size) {
   data_init(node->value, value, size);
 }
@@ -27,20 +28,7 @@ void node_setValue(Node* node,const char* value,const size_t size) {
    @param node:Puntero al node donde queiro setiar.
    @param in: Puntero al node que quiero remplazar.**/
 void node_setIn(Node* node, Node* in){
-    printf("===== NODE ===== Estoy en node_setIn\n");
-    // if(in){
-        printf("===== NODE ===== Se ejecuto if\n");
-        node->in = in;
-    // }
-    // else{
-        /**
-        HAY QUE BUSCAR UNA FORMA DE SETEAR EL PUNTERO IN A NULO SIN USAR NULL O 0(CERO)
-        PORQUE UN PUNTERO VOID NO LO ADMITE.
-        */
-        // printf("Se ejecuto else\n");
-        //node->in = NULL;
-    // }
-    printf("===== NODE ===== Sali de node_setIn\n");
+    node->in = in;
 }
 /**@brief Funcion que cambia el puntero al node siguiente por uno pasa por parametro
    @param Node: Puntero al node que quiero setiar.
@@ -49,7 +37,6 @@ void node_setOut(Node* node, Node* out){
     node->out = out;
 }
 
-// TODO: debe retornar el Data
 /**@brief Funcion que retorna el dato del nodo
    @param node: Puntero a node que tiene le dato que busco.
    @return data: el dato del nodo en caso de no tener dato retorna 0.**/
@@ -69,13 +56,13 @@ Node* node_getBack(Node* node){
     return (Node*)node->in;
 }
 
-//TODO: habria q sacar los punteros del out y del in // lo hago con NULL, por ahora, lo dejo asi, no se quejo el compilador.
+/**@brief Funcion que libera los recursos alocados en memoria de un nodo.
+   @param node: Puntero al nodo qeu deceo liberar de la memoria.
+*/
 void node_free(Node* node) {
-  printf("===== NODE ===== en free NODE\n");
   data_free(node->value);
   node->in = NULL;
   node->out = NULL;
   free(node->value);
   node->value = 0;
-  printf("===== NODE ===== SALGO de free NODE\n");
 }

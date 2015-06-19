@@ -38,6 +38,10 @@ Node* node_getBack(Node* node);
    @param node: Puntero al node que quiero liberar.*/
 void node_free(Node* node);
 
-
+/**@brief Funcion que permite setear un valor a un nodo.
+   @param node: Puntero al nodo al cual yo quiero darle le valor.
+   @param value: Puntero al valor que quiero darle al nodo.
+   @param size: tamaño del valor
+*/
 void node_setValue(Node* node,const char* value,const size_t size);
 #endif // __NODE_H_

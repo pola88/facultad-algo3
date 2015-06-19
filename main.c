@@ -22,6 +22,7 @@ int main(int argc, char** argv) {
   int count = redis_lPush(&redis, "myList", buffer, sizeof(buffer));
 
   int lLeng = redis_lLeng(&redis, "myList");
+
   printf("Tamaño de la lista %i\n", lLeng);
 
   count = redis_lPush(&redis, "myList", newValue, sizeof(newValue));
@@ -45,6 +46,6 @@ int main(int argc, char** argv) {
   data_free(&data);
 
   printf("\n");
-  printf("TODO CORRECTO\n");
+  printf("UNA FIESTA!\n");
   return 0;
 }

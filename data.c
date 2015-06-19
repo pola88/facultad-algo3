@@ -34,7 +34,6 @@ void data_print(Data* data) {
   char* tmp = data->value;
   char* tmpSrc = data->value;
 
-  //imprimo hasta el tamaño de la palabra
   while((tmp - tmpSrc) < data->size) {
     printf("%x ", *tmp++);
   }
@@ -44,15 +43,14 @@ void data_print(Data* data) {
 /**@brief Funcion que libera los recusos a locados en memoria por la data.
    @param data: Puntero a la data que quiero liberar.*/
 void data_free(Data* data) {
-    printf("FREE DATA!!!\n");
   free(data->value);
   data->value = 0;
 }
 /**@brief Funcion que cualcula si hay espacio en memoria necesario en caso de que no ejecuta relloc.
    @param data: Puntero a la data donde creo que hay poco espacio.*/
 void data_reallocIfNecesary(Data* data) {
-  int newCapacity = data_calculateCapacity(data->size);//Cuanto memoria tiene para usar
-  //si el valor es mas grande o mas chico que la capacidad actual, hago realloc.
+  int newCapacity = data_calculateCapacity(data->size);
+
   if(data->capacity != newCapacity) {
     data->capacity = newCapacity;
     data->value = realloc(data->value, data->capacity);
@@ -63,17 +61,17 @@ void data_reallocIfNecesary(Data* data) {
    @param value: Puntero al valor que deceo remplazar.
    @param size: Tamaño de del valor.*/
 void data_setValue(Data* data, const char* value, const size_t size) {
-  data->size = size; //Asigno el tamaño del objecto a guardar;
-  data_reallocIfNecesary(data);//chequeo si es necesario pedir mas memoria
+  data->size = size;
+  data_reallocIfNecesary(data);
   memcpy(data->value, value, data->capacity - 1);
 }
 /**@brief Funcion que copia data.
    @param dst: Puntero a la data que recibe el valor copiado
    @param src: Puntero a la data de donde secopia el valor.*/
 void data_copy(Data* dst, Data* src) {
-  printf("estoy en data copy \n");
+
   dst->size = src->size;
-  data_reallocIfNecesary(dst);//chequeo si es necesario pedir mas memoria
+  data_reallocIfNecesary(dst);
   memcpy(dst->value, src->value, dst->capacity - 1);
 }
 /**@brief Funcion que concatena datas.
@@ -83,10 +81,10 @@ void data_copy(Data* dst, Data* src) {
    @return El tamaño de la data concatenada en Int*/
 int data_append(Data* dst, const char* value, const size_t size) {
   int oldSize = dst->size;
-  //caculo el nuevo tamaño de la palabra
+
   dst->size = dst->size + size;
-  data_reallocIfNecesary(dst);//chequeo si es necesario pedir mas memoria
-  //Avanzo el tamaño de la palabra q tenia, para agregar apartir de esa posicion de memoria.
+  data_reallocIfNecesary(dst);
+
   memcpy(dst->value + oldSize, value, size);
 
   return dst->size;
@@ -96,8 +94,6 @@ int data_append(Data* dst, const char* value, const size_t size) {
    @param secondData: Puntero a data contra la que quiero comparar.*/
 void data_compare(Data* firstData, Data* secondData) {
   size_t size;
-
-  //Agarro el tamaño mas alto, para comparar.
   if(firstData->size < secondData->size) {
     size = secondData->size;
   } else {

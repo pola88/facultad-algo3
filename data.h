@@ -2,11 +2,11 @@
 #define __DATA_H__
 
 #include <string.h>
-#define DEFAULT_LENGTH 4//por defecto, tiene una capacidad de 4
+#define DEFAULT_LENGTH 4
 
 typedef struct _DATA {
-    size_t size; //Es el tamaño del array
-    int capacity; // cantidad de memoria disponible para usar
+    size_t size;
+    int capacity;
     char* value;
 } Data ;
 /**@brief Funcion que inicia la data con valor.
