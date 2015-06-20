@@ -88,6 +88,12 @@ int list_push(LinkedList* linkList, const char* value, const size_t size){
    @param linkList: Puntero a lalista que quiero hacer pop.
    @return Data: Puntero al elemento que se quito.*/
 void list_pop(LinkedList* linkList, Data* data){
+    //si no tiene elemento, le devuelvo data sin nada
+    if (linkList->nroCollection == 0) {
+      data_init(data, "",0);
+      return;
+    }
+
     printf("$$$ LIST-POP $$$ estoy en list pop \n");
     Node* oldFront = linkList->front;
     //Si tiene un solo elemento, no hay q setear el nuevo front.
