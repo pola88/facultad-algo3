@@ -17,24 +17,46 @@ int main(int argc, char** argv) {
   redis_set(&redis, "myKey", secondValue, sizeof(secondValue));
   redis_show(&redis);
 
+  printf("\n");
+
   printf("Exists\n");
   printf("%i\n", redis_exists(&redis, "myKey"));
   printf("%i\n", redis_exists(&redis, "fake"));
   printf("%i\n", redis_exists(&redis, "myKey2"));
+
+  printf("\n");
 
   printf("Sizes\n");
   redis_strlen(&redis, "myKey");
   redis_strlen(&redis, "fake");
   redis_strlen(&redis, "myKey2");
 
+  printf("\n");
+
   printf("Append\n");
   printf("Nuevo Size: %d\n", redis_append(&redis, "myKey", secondValue, sizeof(secondValue)));
   printf("Nuevo Size: %d\n", redis_append(&redis, "myKey2", secondValue, sizeof(secondValue)));
 
+  printf("\n");
+
   printf("Get: \n");
+  printf("myKey");
+  redis_get(&redis, "myKey");
+  printf("fake");
+  redis_get(&redis, "fake");
+  printf("myKey2");
+  redis_get(&redis, "myKey2");
+  printf("myKey3");
+  redis_get(&redis, "myKey3");
+
+  printf("\n");
+
+  printf("Sizes\n");
+  redis_strlen(&redis, "myKey");
+  printf("contenido:");
   redis_get(&redis, "myKey");
 
-
+  printf("\n");
 
   printf("Agrego lista\n");
 
