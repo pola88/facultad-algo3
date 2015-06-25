@@ -62,7 +62,7 @@ int redis_createList(Redis* redis, char* key, char* value, const size_t size) {
    @param size: Tamaño del valor que se decea iniciar en el item.
    **/
 void redis_set(Redis* redis, char* key, char* value, const size_t size) {
-  Item* currentItem = redis_get(redis, key);
+  Item* currentItem = __redis_get(redis, key);
   if(!currentItem) {
     redis_createItem(redis, key, value, size);
   } else {
@@ -76,7 +76,7 @@ void redis_set(Redis* redis, char* key, char* value, const size_t size) {
    @param redis: Puntero al redis donde esta el item a retornar.
    @param key: Puntero a la clave que accede al Item.
    **/
-Item* redis_get(Redis* redis, char* key) {
+Item* __redis_get(Redis* redis, char* key) {
   if(redis->total == 0) {
     return 0;
   } else {
@@ -103,7 +103,7 @@ Item* redis_get(Redis* redis, char* key) {
    @return 1: Si existe.
    **/
 int redis_exists(Redis* redis, char* key) {
-  Item* tmp = redis_get(redis, key);
+  Item* tmp = __redis_get(redis, key);
 
   if(tmp) {
     return 1;
@@ -118,7 +118,7 @@ int redis_exists(Redis* redis, char* key) {
    @return El largo de mi valor.
    **/
 void redis_strlen(Redis* redis, char* key) {
-  Item* tmp = redis_get(redis, key);
+  Item* tmp = __redis_get(redis, key);
   int length = 0;
   if(tmp) {
     length = item_getSize(tmp);
@@ -135,7 +135,7 @@ void redis_strlen(Redis* redis, char* key) {
    @return El largo de mi valor.
     **/
 int redis_append(Redis* redis, char* key, char* value, const size_t size) {
-  Item* currentItem = redis_get(redis, key);
+  Item* currentItem = __redis_get(redis, key);
   if(!currentItem) {
     redis_createItem(redis, key, value, size);
     return size;
@@ -205,7 +205,7 @@ void redis_show(Redis* redis) {
     @param size: Tamaño del nuevo item a crear
     @return El largo total de la lista.*/
 int redis_lPush(Redis* redis, char* key, char* value, const size_t size){
-    Item* item = redis_get(redis,key);
+    Item* item = __redis_get(redis,key);
     if(!item) {
       return redis_createList(redis, key, value, size);
     } else {
@@ -218,7 +218,7 @@ int redis_lPush(Redis* redis, char* key, char* value, const size_t size){
    @param key: Puntero a que accede al itemque contiene la lista.
    @return data: Puntero al ddato que se quito de la lista.*/
 void redis_lPop(Redis* redis, char* key, Data* data){
-    Item* item = redis_get(redis,key);
+    Item* item = __redis_get(redis,key);
 
     if(item) {
       item_pop(item, data);
@@ -232,7 +232,7 @@ void redis_lPop(Redis* redis, char* key, Data* data){
    @param key: Clave que accede a la lista que deceo medir.
    @return Int: Largo de la lista medida.*/
 int redis_lLeng(Redis* redis, char* key){
-    Item* item = redis_get(redis,key);
+    Item* item = __redis_get(redis,key);
     if(item) {
       return item_leng(item);
     } else {
@@ -245,10 +245,28 @@ int redis_lLeng(Redis* redis, char* key){
    @param key: Puntero a la clave que haccede a la lista.
    @return LinkedList: Puntero a la lista donde se encuentran los datos de la clave.*/
 LinkedList* redis_lGet(Redis* redis, char* key){
-    Item* item = redis_get(redis,key);
+    Item* item = __redis_get(redis,key);
     if(item) {
       return item_listGet(item);
     } else {
       return 0;
     }
+}
+
+/**@brief Funcion que mediante una clave muestra el contenido en pantalla.
+   @param redis: Puntero al redis donde esta el item a mostrar.
+   @param key: Puntero a la clave que accede al Item.
+   **/
+void redis_get(Redis* redis, char* key){
+ if(redis->total != 0) {
+    void* tmp = redis->values;
+    void* tmpSrc = redis->values;
+    int totalSize = redis->total*sizeof(Item);
+    while((tmp - tmpSrc) < totalSize && strcmp(((Item*)tmp)->key,key)) {
+      tmp = tmp + sizeof(Item);
+    }
+    if(totalSize != (tmp - tmpSrc)) { //si el mismo valor, no encontro la key
+     item_showValue((Item*)tmp);
+    }
+  }
 }

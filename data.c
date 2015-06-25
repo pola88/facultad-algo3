@@ -35,7 +35,7 @@ void data_print(Data* data) {
   char* tmpSrc = data->value;
 
   while((tmp - tmpSrc) < data->size) {
-    printf("%x ", *tmp++);
+    printf("0x%x ", *tmp++);
   }
 
   printf("\n");

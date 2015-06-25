@@ -36,7 +36,7 @@ void redis_set(Redis* redis, char* key, char* value, const size_t size);
    @param redis: Puntero al redis donde esta el item a retornar.
    @param key: Puntero a la clave que accede al Item.
    **/
-Item* redis_get(Redis* redis, char* key);
+Item* __redis_get(Redis* redis, char* key);
 
 /**@brief Funcion comprueba la existencia de una clave.
    @param redis: Puntero a redis donde creeo que esta la clave
@@ -116,4 +116,10 @@ int redis_createList(Redis* redis, char* key, char* value, const size_t size);
    @param redis: Puntero al redis que contiene las keys que deceo ver.
 */
 void redis_showKeys(Redis* redis);
+
+/**@brief Funcion que mediante una clave muestra el contenido en pantalla.
+   @param redis: Puntero al redis donde esta el item a mostrar.
+   @param key: Puntero a la clave que accede al Item.
+   **/
+void redis_get(Redis* redis, char* key);
 #endif
