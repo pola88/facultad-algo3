@@ -58,9 +58,8 @@ void item_pop(Item* item, Data* data);
    @param item: Puntero al itme donde se encuentra la lista a medir.
    @return Int: Largo de la lista que se midio.*/
 int item_leng(Item* item);
-/**@brief Funcion que dado un item retorna su lista.
-   @param item: Puntero al item donde esta kla lista que quiero obtener
-   @return LinkedList:Retorna la lista del item.*/
-LinkedList* item_listGet(Item* item);
+/**@brief Funcion que dado un item muestra el contenido de su lista.
+   @param item: Puntero al item donde esta la lista que quiero mostrar*/
+void item_listGet(Item* item);
 
 #endif

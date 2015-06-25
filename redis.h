@@ -96,12 +96,10 @@ void redis_lPop(Redis* redis, char* key, Data* data);
    @return Int: Largo de la lista medida.*/
 int redis_lLeng(Redis* redis, char* key);
 
-/**@brief Funcion que dada una clave retorna todo los datos de la lista a la que accede.
+/**@brief Funcion que dada una clave muestra todo los datos de la lista a la que accede.
    @param redis: Puntero a redis donde se encuentra la lista que quiero iterar.
-   @param key: Puntero a la clave que haccede a la lista.
-   @return LinkedList: Puntero a la lista donde se encuentran los datos de la clave.*/
-LinkedList* redis_lGet(Redis* redis, char* key);
-//lo programo un tipo mas
+   @param key: Puntero a la clave que haccede a la lista.*/
+void redis_lGet(Redis* redis, char* key);
 
 /**@brief Funcion que crea un Item con una lista para almacenar valores y se lo agrega a Redis.
    @param redis: Puntero al redis donde quiero guardar la lista.

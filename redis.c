@@ -244,12 +244,12 @@ int redis_lLeng(Redis* redis, char* key){
    @param redis: Puntero a redis donde se encuentra la lista que quiero iterar.
    @param key: Puntero a la clave que haccede a la lista.
    @return LinkedList: Puntero a la lista donde se encuentran los datos de la clave.*/
-LinkedList* redis_lGet(Redis* redis, char* key){
+void redis_lGet(Redis* redis, char* key){
     Item* item = __redis_get(redis,key);
     if(item) {
-      return item_listGet(item);
+      item_listGet(item);
     } else {
-      return 0;
+      printf("no existe el item");
     }
 }
 

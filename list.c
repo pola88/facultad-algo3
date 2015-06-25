@@ -107,3 +107,20 @@ void list_pop(LinkedList* linkList, Data* data){
 int list_leng(LinkedList* linkList){
   return linkList->nroCollection;
 }
+
+void list_get(LinkedList* linkList){
+ if (linkList->nroCollection == 0) {
+      printf("lista vacia");
+    }else{
+     Node* nodeAux = linkList->front;
+     int nroCollectionAux = 0;
+     while (nroCollectionAux < linkList->nroCollection) {
+       Data* aux = node_getValue(nodeAux);
+       printf("numero iteracion %i\n", nroCollectionAux);
+       data_print(aux);
+       nodeAux = node_getNext(nodeAux);
+       nroCollectionAux++;
+     }
+    }
+
+}

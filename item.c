@@ -118,9 +118,8 @@ int item_leng(Item* item){
     return list_leng(item->linkList);
 }
 
-/**@brief Funcion que dado un item retorna su lista.
-   @param item: Puntero al item donde esta kla lista que quiero obtener
-   @return LinkedList:Retorna la lista del item.*/
-LinkedList* item_listGet(Item* item){
-    return item->linkList;
+/**@brief Funcion que dado un item muestra el contenido de su lista.
+   @param item: Puntero al item donde esta la lista que quiero mostrar*/
+void item_listGet(Item* item){
+   list_get(item->linkList);
 }

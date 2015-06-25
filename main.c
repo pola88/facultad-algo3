@@ -70,6 +70,10 @@ int main(int argc, char** argv) {
 
   printf("Tamaño de la lista, dps de agregar un item %i\n", count);
 
+  printf("redis_lGet:\n");
+  redis_lGet(&redis, "myList");
+  printf("fin redis_lGet\n");
+
   Data data;
   data_init(&data, "",0);
   redis_lPop(&redis, "myList", &data);
@@ -80,6 +84,10 @@ int main(int argc, char** argv) {
 
   printf("Keys\n");
   redis_showKeys(&redis);
+
+  printf("redis_lGet:\n");
+  redis_lGet(&redis, "myList");
+  printf("fin redis_lGet\n");
 
   printf("Liberar redis\n");
 

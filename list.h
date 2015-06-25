@@ -36,5 +36,7 @@ void list_pop(LinkedList* linkList, Data* data);
    @param linkList: Puntero a la lista que deceo medir.
    @return Int: Largo de la lista que se midio.*/
 int list_leng(LinkedList* linkList);
-
+/**@brief Funcion que dada una lista muestra su contenido.
+   @param linkList: Puntero a la lista que deseo mostrar.*/
+void list_get(LinkedList* linkList);
 #endif
