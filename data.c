@@ -33,12 +33,11 @@ void data_init(Data* data, const char* value, const size_t size) {
 void data_print(Data* data) {
   char* tmp = data->value;
   char* tmpSrc = data->value;
-
+  printf("[ ");
   while((tmp - tmpSrc) < data->size) {
     printf("0x%x ", *tmp++);
   }
-
-  printf("\n");
+  printf(" ]\n");
 }
 /**@brief Funcion que libera los recusos a locados en memoria por la data.
    @param data: Puntero a la data que quiero liberar.*/
