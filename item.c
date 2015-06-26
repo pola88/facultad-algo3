@@ -41,6 +41,7 @@ void item_setValue(Item* item, const char* value, const size_t size) {
    @param item: Punero a item que quiero mostrar por consola.**/
 void item_showValue(Item* item) {
   data_print(item->value);
+  printf("\n");
 }
 
 /**@brief Funcion que agrega valor a un item.

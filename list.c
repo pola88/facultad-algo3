@@ -64,14 +64,14 @@ void list_free(LinkedList* linklist){
 int list_push(LinkedList* linkList, const char* value, const size_t size){
     Node* newNode = (Node*)malloc(sizeof(Node));
 
-    node_init(newNode,0, linkList->front);
+    node_init(newNode,linkList->back, 0);
     node_setValue(newNode, value, size);
 
-    Node* front = linkList->front;
+    Node* oldBack = linkList->front;
 
-    node_setOut(front,newNode);
+    node_setOut(oldBack,newNode);
 
-    linkList->front = newNode;
+    linkList->back = newNode;
 
     linkList->nroCollection++;
 
@@ -110,17 +110,22 @@ int list_leng(LinkedList* linkList){
 
 void list_get(LinkedList* linkList){
  if (linkList->nroCollection == 0) {
-      printf("lista vacia");
+      printf("[ ]");
     }else{
      Node* nodeAux = linkList->front;
-     int nroCollectionAux = 0;
-     while (nroCollectionAux < linkList->nroCollection) {
+    //  int nroCollectionAux = 0;
+     printf("[");
+     while (nodeAux) {
        Data* aux = node_getValue(nodeAux);
-       printf("numero iteracion %i\n", nroCollectionAux);
+      //  printf("numero iteracion %i\n", nroCollectionAux);
        data_print(aux);
        nodeAux = node_getNext(nodeAux);
-       nroCollectionAux++;
+      //  nroCollectionAux++;
+      if(nodeAux) {
+        printf(", ");
+      }
      }
+     printf("]\n");
     }
 
 }

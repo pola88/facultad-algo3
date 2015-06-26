@@ -20,9 +20,9 @@ int main(int argc, char** argv) {
   printf("\n");
 
   printf("Exists\n");
-  printf("%i\n", redis_exists(&redis, "myKey"));
-  printf("%i\n", redis_exists(&redis, "fake"));
-  printf("%i\n", redis_exists(&redis, "myKey2"));
+  printf("Existe myKey: %i\n", redis_exists(&redis, "myKey"));
+  printf("Existe fake: %i\n", redis_exists(&redis, "fake"));
+  printf("Existe myKey2: %i\n", redis_exists(&redis, "myKey2"));
 
   printf("\n");
 
@@ -68,29 +68,36 @@ int main(int argc, char** argv) {
 
   count = redis_lPush(&redis, "myList", newValue, sizeof(newValue));
 
+  printf("\n");
   printf("Tamaño de la lista, dps de agregar un item %i\n", count);
 
+  printf("\n");
   printf("redis_lGet:\n");
   redis_lGet(&redis, "myList");
   printf("fin redis_lGet\n");
 
+  printf("\n");
+  printf("Pop\n");
   Data data;
   data_init(&data, "",0);
   redis_lPop(&redis, "myList", &data);
   data_print(&data);
+  printf("\n");
 
   lLeng = redis_lLeng(&redis, "myList");
   printf("Tamaño de la lista, dps de quitar un item %i\n", lLeng);
 
+  printf("\n");
   printf("Keys\n");
   redis_showKeys(&redis);
 
+  printf("\n");
   printf("redis_lGet:\n");
   redis_lGet(&redis, "myList");
   printf("fin redis_lGet\n");
 
+  printf("\n");
   printf("Liberar redis\n");
-
   redis_free(&redis);
   data_free(&data);
 

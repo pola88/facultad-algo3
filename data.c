@@ -37,7 +37,7 @@ void data_print(Data* data) {
   while((tmp - tmpSrc) < data->size) {
     printf("0x%x ", *tmp++);
   }
-  printf(" ]\n");
+  printf("]");
 }
 /**@brief Funcion que libera los recusos a locados en memoria por la data.
    @param data: Puntero a la data que quiero liberar.*/
